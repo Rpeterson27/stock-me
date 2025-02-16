@@ -1,6 +1,6 @@
-# Stock Analysis AI Backend
+# StockMe Backend
 
-This is the backend service for the Stock Analysis AI Report Generator. It provides AI-powered stock analysis by integrating multiple data sources and leveraging generative AI.
+This is the backend service for the StockMe Report Generator. It provides AI-powered stock analysis by integrating multiple data sources and leveraging generative AI.
 
 ## Architecture
 
@@ -58,34 +58,6 @@ Generates a comprehensive stock analysis report including:
 - Actionable Summary
 - Potential Risks/Opportunities
 
-## Environment Variables
-
-Required environment variables in `.env`:
-```
-GOOGLE_API_KEY=your_gemini_ai_key
-AGENTQL_API_KEY=your_agentql_key
-WANDB_API_KEY=your_wandb_api_key  # For Weights & Biases integration
-```
-
-## Getting Started
-
-1. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
-
-2. Create a `.env` file with required API keys:
-```
-GOOGLE_API_KEY=your_gemini_ai_key
-AGENTQL_API_KEY=your_agentql_key
-WANDB_API_KEY=your_wandb_api_key  # For Weights & Biases integration
-```
-
-3. Run the server:
-```bash
-uvicorn backend.app.main:app --reload
-```
-
 ## Future Improvements
 
 1. **Caching Layer**:
@@ -107,11 +79,3 @@ uvicorn backend.app.main:app --reload
    - Enhanced Weave integration for more metrics
    - Custom dashboards for analysis quality
    - A/B testing different prompt strategies
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
