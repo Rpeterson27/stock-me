@@ -1,3 +1,5 @@
+"""YouTube video fetching and analysis using Agno."""
+
 from datetime import datetime, timedelta
 from typing import List, Dict, Any
 import asyncio
@@ -7,6 +9,10 @@ import re
 import json
 from urllib.parse import quote
 import traceback
+import os
+from agno.agent import Agent
+from agno.tools.youtube import YouTubeTools
+from agno.models.google import Gemini
 
 logger = logging.getLogger(__name__)
 
@@ -164,9 +170,82 @@ def calculate_video_score(video: Dict[str, Any], search_mode: str = 'balanced') 
     
     return final_score
 
+class YouTubeAnalyzer:
+    """Analyzer for YouTube videos using Agno."""
+    
+    def __init__(self):
+        """Initialize Agno agent for YouTube analysis."""
+        api_key = os.getenv('GOOGLE_API_KEY')
+        self.agent = Agent(
+            model=Gemini(api_key=api_key),
+            tools=[YouTubeTools(get_video_data=False)],
+            show_tool_calls=False,
+            markdown=True,
+            debug_mode=False,
+            instructions="""
+            Use the get_youtube_video_captions function to analyze stock-related videos.
+            Focus on extracting key financial insights, market analysis, and investment recommendations.
+            Consider both technical and fundamental analysis mentioned in the video.
+            Evaluate the credibility of the source and their analysis methodology.
+            """
+        )
+    
+    async def analyze_video(self, video_url: str, ticker: str) -> Dict[str, Any]:
+        """
+        Analyze a YouTube video using Agno agent.
+        
+        Args:
+            video_url: URL of the video to analyze
+            ticker: Stock ticker symbol
+            
+        Returns:
+            Dictionary containing analysis results
+        """
+        try:
+            # Get video content using YouTube tools
+            video_content = await asyncio.to_thread(
+                self.agent.tools[0].get_youtube_video_captions,
+                video_url
+            )
+            
+            # Run analysis with Agno agent
+            response = await asyncio.to_thread(
+                self.agent.run,
+                f"""
+                Analyze this video about {ticker} stock:
+                {video_content}
+                
+                Focus on:
+                1. Key financial insights and predictions
+                2. Technical analysis points
+                3. Fundamental analysis points
+                4. Credibility assessment
+                5. Overall sentiment
+                """
+            )
+            
+            # Extract analysis from response
+            if hasattr(response, 'content'):
+                analysis = response.content
+            elif isinstance(response, dict):
+                analysis = response.get('content', str(response))
+            else:
+                analysis = str(response)
+            
+            return {
+                "url": video_url,
+                "analysis": analysis,
+                "analysis_timestamp": datetime.now().isoformat(),
+                "analysis_source": "agno"
+            }
+            
+        except Exception as e:
+            logger.error(f"Error analyzing video with Agno: {str(e)}")
+            return None
+
 async def fetch_stock_videos(ticker: str, max_results: int = 5, search_mode: str = 'balanced') -> List[Dict[str, Any]]:
     """
-    Fetch stock-related videos from YouTube using their AJAX API.
+    Fetch and analyze stock-related videos.
     
     Args:
         ticker: Stock ticker symbol
@@ -174,9 +253,19 @@ async def fetch_stock_videos(ticker: str, max_results: int = 5, search_mode: str
         search_mode: One of 'recent', 'relevant', 'popular', or 'balanced'
         
     Returns:
-        List of video information dictionaries
+        List of video information dictionaries with Agno analysis
     """
     logger.info(f"Fetching YouTube videos for ticker: {ticker} (mode: {search_mode})")
+    
+    # Function to convert datetime objects to ISO format
+    def convert_datetime(obj):
+        if isinstance(obj, datetime):
+            return obj.isoformat()
+        elif isinstance(obj, dict):
+            return {k: convert_datetime(v) for k, v in obj.items()}
+        elif isinstance(obj, list):
+            return [convert_datetime(item) for item in obj]
+        return obj
     
     # Construct search URL and parameters for AJAX endpoint
     url = "https://www.youtube.com/youtubei/v1/search"
@@ -304,7 +393,24 @@ async def fetch_stock_videos(ticker: str, max_results: int = 5, search_mode: str
                     # Sort videos by score and take top N
                     videos = sorted(all_videos, key=lambda x: x['score'], reverse=True)[:max_results]
                     logger.info(f"Found {len(videos)} videos after scoring")
-                    return videos
+                    
+                    try:
+                        # Initialize analyzer
+                        analyzer = YouTubeAnalyzer()
+                        
+                        # Analyze top videos
+                        for video in videos[:3]:
+                            analysis = await analyzer.analyze_video(video['url'], ticker)
+                            if analysis:
+                                video['agno_analysis'] = analysis
+                                
+                        # Convert all datetime objects to ISO format strings before returning
+                        videos = [convert_datetime(video) for video in videos]
+                        return videos
+                        
+                    except Exception as e:
+                        logger.error(f"Error in video analysis: {str(e)}")
+                        return videos  # Return videos without analysis if it fails
                     
                 except Exception as e:
                     logger.error(f"Error parsing YouTube video data: {str(e)}")
@@ -331,6 +437,8 @@ if __name__ == "__main__":
             print(f"Duration: {video['duration']}")
             print(f"Published: {video['published_at']}")
             print(f"Score: {video['score']:.2f}")
+            if 'agno_analysis' in video:
+                print(f"Agno Analysis: {video['agno_analysis']['analysis']}")
             print("-" * 80)
     
     asyncio.run(test())

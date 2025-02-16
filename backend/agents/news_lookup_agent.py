@@ -1,173 +1,84 @@
-from datetime import datetime
 from typing import List, Dict, Any
-import asyncio
-from .browser_context import BrowserContext
-from playwright._impl._errors import TimeoutError, Error, TargetClosedError
 import logging
-import traceback
+from .browser_context import BrowserContext
+from datetime import datetime
+import asyncio
 
 logger = logging.getLogger(__name__)
 
-async def fetch_news_links(query: str, max_retries: int = 3) -> List[Dict[str, Any]]:
+async def fetch_news_links(ticker: str) -> List[Dict[str, Any]]:
     """
-    Fetches financial news links for a given query, prioritizing accessible sources.
-    
-    Args:
-        query: Stock ticker or company name
-        max_retries: Number of retries on failure
-        
-    Returns:
-        List of news article information
+    Fetch news links for a given stock ticker from Yahoo Finance.
     """
-    logger.info(f"Fetching news for query: {query}")
-    browser_ctx = await BrowserContext.get_instance()
-    
-    async with browser_ctx.get_page() as page:
-        results = None
-        retry_count = 0
+    try:
+        # Get browser context instance
+        browser_ctx = await BrowserContext.get_instance()
         
-        while retry_count < max_retries and not results:
-            try:
-                # Target Yahoo Finance first
-                yahoo_url = f"https://finance.yahoo.com/quote/{query}/news"
-                logger.info(f"Attempting to navigate to Yahoo Finance: {yahoo_url}")
-                await page.goto(yahoo_url, wait_until='domcontentloaded', timeout=30000)
-                await asyncio.sleep(2)  # Small delay to ensure content loads
-                
-                # Extract news links from Yahoo Finance using specific selectors
-                try:
-                    logger.debug("Querying Yahoo Finance with AgentQL")
-                    results = await page.query_data("""
-                    {
-                        news_section(must be div with id="marketsNews") {
-                            articles[] {
-                                title(must be h3 text)
-                                url(must be a href)
-                                description(must be p text)
-                                source(must be span with class="caas-author")
-                                time(must be span with class="caas-timestamp")
-                            }
-                        }
-                    }
-                    """)
-                    if results and results.get('news_section', {}).get('articles'):
-                        logger.info("Successfully retrieved articles from Yahoo Finance")
-                except (Error, TargetClosedError) as e:
-                    logger.error(f"Error querying Yahoo Finance: {str(e)}")
-                    logger.error(f"Stack trace: {traceback.format_exc()}")
-                    results = None
-                
-                # If Yahoo fails, try Reuters
-                if not results or not results.get('news_section', {}).get('articles'):
-                    logger.info("Yahoo Finance failed, trying Reuters...")
-                    reuters_url = f"https://www.reuters.com/markets/companies/{query}.O"
-                    logger.info(f"Attempting to navigate to Reuters: {reuters_url}")
-                    await page.goto(reuters_url, wait_until='domcontentloaded', timeout=30000)
-                    await asyncio.sleep(2)  # Small delay to ensure content loads
-                    
-                    try:
-                        logger.debug("Querying Reuters with AgentQL")
-                        results = await page.query_data("""
-                        {
-                            articles[] {
-                                title(must be h3 text)
-                                url(must be a href)
-                                description(must be p text)
-                                source(must be div with class="article-info" text)
-                                time(must be time text)
-                            }
-                        }
-                        """)
-                        if results and results.get('articles'):
-                            logger.info("Successfully retrieved articles from Reuters")
-                    except (Error, TargetClosedError) as e:
-                        logger.error(f"Error querying Reuters: {str(e)}")
-                        logger.error(f"Stack trace: {traceback.format_exc()}")
-                        results = None
+        async with browser_ctx.get_page() as page:
+            # Navigate to Yahoo Finance news page
+            url = f"https://finance.yahoo.com/quote/{ticker}/news"
+            await page.goto(url, wait_until='networkidle')
             
-            except (TimeoutError, TargetClosedError) as e:
-                logger.error(f"Navigation error on attempt {retry_count + 1}: {str(e)}")
-                logger.error(f"Stack trace: {traceback.format_exc()}")
-                retry_count += 1
-                await asyncio.sleep(1)  # Wait before retry
-                continue
-                
-            except Exception as e:
-                logger.error(f"Unexpected error on attempt {retry_count + 1}: {str(e)}")
-                logger.error(f"Stack trace: {traceback.format_exc()}")
-                retry_count += 1
-                await asyncio.sleep(1)  # Wait before retry
-                continue
-        
-        # Process results
-        articles = []
-        if results:
-            if results.get('news_section', {}).get('articles'):  # Yahoo Finance format
-                logger.info(f"Processing {len(results['news_section']['articles'])} articles from Yahoo Finance")
-                for article in results['news_section']['articles']:
-                    # Basic sentiment inference from title and description
-                    title = article.get('title', '').lower()
-                    description = article.get('description', '').lower()
-                    sentiment = 'neutral'
-                    
-                    # Simple keyword-based sentiment analysis
-                    positive_words = {'rise', 'gain', 'up', 'growth', 'positive', 'bullish', 'surge', 'jump', 'strong', 'beat'}
-                    negative_words = {'fall', 'drop', 'down', 'decline', 'negative', 'bearish', 'plunge', 'weak', 'miss', 'loss'}
-                    
-                    text = title + ' ' + description
-                    pos_count = sum(1 for word in positive_words if word in text)
-                    neg_count = sum(1 for word in negative_words if word in text)
-                    
-                    if pos_count > neg_count:
-                        sentiment = 'positive'
-                    elif neg_count > pos_count:
-                        sentiment = 'negative'
-                    
-                    articles.append({
-                        "headline": article.get('title', ''),
-                        "summary": article.get('description', '')[:200] + "...",
-                        "url": article.get('url', ''),
-                        "source": article.get('source', 'Yahoo Finance'),
-                        "published_at": datetime.now().isoformat(),  # Store as ISO format string
-                        "sentiment": sentiment
-                    })
-            elif results.get('articles'):  # Reuters format
-                logger.info(f"Processing {len(results['articles'])} articles from Reuters")
-                for article in results['articles']:
-                    # Convert relative Reuters URLs to absolute
-                    url = article.get('url', '')
-                    if url.startswith('/'):
-                        url = f"https://www.reuters.com{url}"
-                    
-                    # Basic sentiment inference from title and description
-                    title = article.get('title', '').lower()
-                    description = article.get('description', '').lower()
-                    sentiment = 'neutral'
-                    
-                    # Simple keyword-based sentiment analysis
-                    positive_words = {'rise', 'gain', 'up', 'growth', 'positive', 'bullish', 'surge', 'jump', 'strong', 'beat'}
-                    negative_words = {'fall', 'drop', 'down', 'decline', 'negative', 'bearish', 'plunge', 'weak', 'miss', 'loss'}
-                    
-                    text = title + ' ' + description
-                    pos_count = sum(1 for word in positive_words if word in text)
-                    neg_count = sum(1 for word in negative_words if word in text)
-                    
-                    if pos_count > neg_count:
-                        sentiment = 'positive'
-                    elif neg_count > pos_count:
-                        sentiment = 'negative'
+            # Wait for news articles to load
+            await page.wait_for_selector('li[data-test="ContentList"]', timeout=10000)
+            
+            # Extract news articles using Playwright's evaluate
+            articles = await page.evaluate("""
+                () => {
+                    const articles = [];
+                    document.querySelectorAll('li[data-test="ContentList"]').forEach(article => {
+                        const titleEl = article.querySelector('a');
+                        const summaryEl = article.querySelector('p');
+                        const sourceEl = article.querySelector('div[data-test="ContentHeader"] span');
                         
-                    articles.append({
-                        "headline": article.get('title', ''),
-                        "summary": article.get('description', '')[:200] + "...",
-                        "url": url,
-                        "source": "Reuters",
-                        "published_at": datetime.now().isoformat(),  # Store as ISO format string
-                        "sentiment": sentiment
-                    })
-        
-        logger.info(f"Returning {len(articles)} articles")
-        return articles
+                        if (titleEl) {
+                            articles.push({
+                                headline: titleEl.textContent.trim(),
+                                url: titleEl.href,
+                                summary: summaryEl ? summaryEl.textContent.trim() : '',
+                                source: sourceEl ? sourceEl.textContent.trim() : 'Yahoo Finance'
+                            });
+                        }
+                    });
+                    return articles;
+                }
+            """)
+            
+            # Process articles and add sentiment
+            processed_articles = []
+            for article in articles[:10]:  # Process top 10 articles
+                # Simple sentiment analysis
+                text = (article['headline'] + ' ' + article['summary']).lower()
+                sentiment = analyze_sentiment(text)
+                
+                processed_articles.append({
+                    "headline": article['headline'],
+                    "summary": article['summary'][:200] + "..." if len(article['summary']) > 200 else article['summary'],
+                    "url": article['url'],
+                    "source": article['source'],
+                    "published_at": datetime.now().isoformat(),
+                    "sentiment": sentiment
+                })
+            
+            return processed_articles
+            
+    except Exception as e:
+        logger.error(f"Error fetching news for {ticker}: {str(e)}")
+        return []
+
+def analyze_sentiment(text: str) -> str:
+    """Simple keyword-based sentiment analysis."""
+    positive_words = {'rise', 'gain', 'up', 'growth', 'positive', 'bullish', 'surge', 'jump', 'strong', 'beat'}
+    negative_words = {'fall', 'drop', 'down', 'decline', 'negative', 'bearish', 'plunge', 'weak', 'miss', 'loss'}
+    
+    pos_count = sum(1 for word in positive_words if word in text)
+    neg_count = sum(1 for word in negative_words if word in text)
+    
+    if pos_count > neg_count:
+        return 'positive'
+    elif neg_count > pos_count:
+        return 'negative'
+    return 'neutral'
 
 if __name__ == "__main__":
     async def test():
