@@ -8,10 +8,10 @@ import google_auth_oauthlib.flow
 import googleapiclient.discovery
 import googleapiclient.errors
 import asyncio
-from ..agents.youtube_agent import fetch_stock_videos
-from ..agents.news_lookup_agent import fetch_news_links
-from ..agents.browser_context import BrowserContext
-from ..agents.report_generator import StockReportGenerator
+from .agents.youtube_agent import fetch_stock_videos
+from .agents.news_lookup_agent import fetch_news_links
+from .agents.browser_context import BrowserContext
+from .agents.report_generator import StockReportGenerator
 
 class StockService:
     def __init__(self):
