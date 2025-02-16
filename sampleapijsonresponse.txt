@@ -1,0 +1,180 @@
+{
+  "ticker": "AAPL",
+  "sentiment_summary": "Neutral",
+  "key_insights": [
+    "Analysis in progress",
+    "Check full report for details"
+  ],
+  "stock_data": {
+    "price": 244.6,
+    "change": "1.27%",
+    "market_cap": "3.7T",
+    "pe_ratio": 29.434416
+  },
+  "news_articles": [
+    {
+      "headline": "Meta is winning over Wall Street while the rest of Big Tech struggles",
+      "summary": "Tech stocks are off to a tough start this year. Well, except for Meta....",
+      "url": "https://finance.yahoo.com/news/meta-is-winning-over-wall-street-while-the-rest-of-big-tech-struggles-184135699.html",
+      "sentiment": "neutral",
+      "published_at": "2025-02-16T13:54:58.852109"
+    },
+    {
+      "headline": "Why Trump reciprocal tariffs should terrify bulls in Apple, Amazon, and other tech plays",
+      "summary": "Tariffs will hit the tech complex....",
+      "url": "https://finance.yahoo.com/news/why-trump-reciprocal-tariffs-should-terrify-bulls-in-apple-amazon-and-other-tech-plays-133025192.html",
+      "sentiment": "neutral",
+      "published_at": "2025-02-16T13:54:58.852131"
+    },
+    {
+      "headline": "Apple (AAPL) Prepares to Launch AI Features in China with Baidu and Alibaba",
+      "summary": "We recently published a list of Top 11 Trending AI News And Wall Street Ratings. In this article, we are going to take a look at where Apple Inc. (NASDAQ:AAPL) stands against other top trending AI sto...",
+      "url": "https://finance.yahoo.com/news/apple-aapl-prepares-launch-ai-204158991.html",
+      "sentiment": "positive",
+      "published_at": "2025-02-16T13:54:58.852145"
+    },
+    {
+      "headline": "This Top Stock Continues to Look More Like Berkshire Hathaway",
+      "summary": "Brookfield Corporation (NYSE: BN) has been a top-performing stock over the decades.  The leading global investment manager has delivered an 18% annualized return over the last 30 years.  Brookfield Co...",
+      "url": "https://finance.yahoo.com/news/top-stock-continues-look-more-104200394.html",
+      "sentiment": "neutral",
+      "published_at": "2025-02-16T13:54:58.852155"
+    },
+    {
+      "headline": "Australia to Ban Foreigners From Buying Some Homes as Costs Soar",
+      "summary": "(Bloomberg) -- Australia’s government will ban foreign investors from buying established houses for the next two years as part of an election pitch to tackle surging home prices. Most Read from Bloomb...",
+      "url": "https://finance.yahoo.com/news/australia-ban-foreigners-buying-homes-235936865.html",
+      "sentiment": "neutral",
+      "published_at": "2025-02-16T13:54:58.852170"
+    },
+    {
+      "headline": "Apple Inc. (AAPL): Among the Best Forever Stocks to Buy Right Now",
+      "summary": "We recently compiled a list of the 13 Best Forever Stocks to Buy Right Now. In this article, we are going to take a look at where Apple Inc. (NASDAQ:AAPL) stands against the other forever stocks. Stat...",
+      "url": "https://finance.yahoo.com/news/apple-inc-aapl-among-best-173037368.html",
+      "sentiment": "positive",
+      "published_at": "2025-02-16T13:54:58.852181"
+    },
+    {
+      "headline": "When a Lifetime Subscription Can Save You Money—and When It’s Risky",
+      "summary": "Fed up with spending too much on subscriptions, I found myself tempted by a pricing plan cropping up in more apps: a lifetime membership.  You need to pony up hundreds, or even thousands, up front—and...",
+      "url": "https://finance.yahoo.com/m/6efe8b4c-47f2-3fcf-a7cf-8607b4bf4788/when-a-lifetime-subscription.html",
+      "sentiment": "positive",
+      "published_at": "2025-02-16T13:54:58.852193"
+    },
+    {
+      "headline": "2 Top Bargain Stocks Ready for a Bull Run",
+      "summary": "Technology stocks have helped lead the market higher over the past couple of years.  While many of these tech stocks have run up in value (and in valuation), there are still some stocks that remain at...",
+      "url": "https://finance.yahoo.com/news/2-top-bargain-stocks-ready-101500106.html",
+      "sentiment": "positive",
+      "published_at": "2025-02-16T13:54:58.852203"
+    },
+    {
+      "headline": "Berkshire Reduces Stakes in Bank of America, Citigroup, Buys Constellation Brands",
+      "summary": "Berkshire Hathaway  reduced its stakes in  Bank of America  and  Citigroup  and established a new holding in  Constellation Brands  during the fourth quarter.  Berkshire’s position in  Apple  its larg...",
+      "url": "https://finance.yahoo.com/m/aa00f882-f611-3b00-b754-55a4cf4f5d5d/berkshire-reduces-stakes-in.html",
+      "sentiment": "positive",
+      "published_at": "2025-02-16T13:54:58.852216"
+    },
+    {
+      "headline": "What Analysts Think of Apple Stock Ahead of Wednesday’s Product Launch",
+      "summary": "With Apple CEO Tim Cook teasing a new product launch Wednesday, analysts have speculated a new lower-cost iPhone model could soon hit store shelves....",
+      "url": "https://finance.yahoo.com/news/analysts-think-apple-stock-ahead-220510393.html",
+      "sentiment": "neutral",
+      "published_at": "2025-02-16T13:54:58.852224"
+    },
+    {
+      "headline": "Apple’s Long-Promised AI Overhaul for Siri Runs Into Bugs, Possible Delays",
+      "summary": "(Bloomberg) -- Apple Inc.’s long-promised overhaul for the Siri digital assistant is facing engineering problems and software bugs, threatening to postpone or limit its release, according to people wi...",
+      "url": "https://finance.yahoo.com/news/apple-long-promised-ai-overhaul-220432208.html",
+      "sentiment": "neutral",
+      "published_at": "2025-02-16T13:54:58.852239"
+    },
+    {
+      "headline": "Buffett Sold More BofA Stock While Keeping Apple Stake Intact",
+      "summary": "(Bloomberg) -- Warren Buffett’s Berkshire Hathaway Inc. continued whittling a longtime bet on Bank of America Corp. in last year’s final months, while keeping a stake in Apple Inc. intact following an...",
+      "url": "https://finance.yahoo.com/news/buffett-sold-more-bofa-stock-214245259.html",
+      "sentiment": "neutral",
+      "published_at": "2025-02-16T13:54:58.852254"
+    },
+    {
+      "headline": "Apple's Strategic China AI Moves: A \"Big Step Forward,\" Wedbush Notes",
+      "summary": "Apple Reinvents Its Future in China with a Pivotal AI Partnership...",
+      "url": "https://finance.yahoo.com/news/apples-strategic-china-ai-moves-200350944.html",
+      "sentiment": "neutral",
+      "published_at": "2025-02-16T13:54:58.852259"
+    },
+    {
+      "headline": "Is Meta Now the Lone Star in the Big Tech Cohort? ETFs in Focus",
+      "summary": "Meta shares have gained the most in the big tech cohort this year. Here's why....",
+      "url": "https://finance.yahoo.com/news/meta-now-lone-star-big-180000831.html",
+      "sentiment": "positive",
+      "published_at": "2025-02-16T13:54:58.852272"
+    },
+    {
+      "headline": "Apple Restores TikTok to App Store. How It Could Help the iPhone Maker.",
+      "summary": "The reassurance that Apple won’t face legal risks over making the TikTok app available comes at a delicate time in its own negotiations with China....",
+      "url": "https://finance.yahoo.com/m/2a415c83-e25d-3c70-bd60-4eefc850ebce/apple-restores-tiktok-to-app.html",
+      "sentiment": "neutral",
+      "published_at": "2025-02-16T13:54:58.852279"
+    },
+    {
+      "headline": "Top Stock Reports for Apple, Eli Lilly & Shopify",
+      "summary": "Today's Research Daily features new research reports on 16 major stocks, including Apple Inc. (AAPL), Eli Lilly and Company (LLY) and Shopify Inc. (SHOP), as well as a micro-cap stock ImmuCell Corpora...",
+      "url": "https://finance.yahoo.com/news/top-stock-reports-apple-eli-225400400.html",
+      "sentiment": "neutral",
+      "published_at": "2025-02-16T13:54:58.852287"
+    },
+    {
+      "headline": "Buffett’s Berkshire Holds On to Apple Shares, but Trims Stakes in BofA, Citi and Capital One",
+      "summary": "Warren Buffett’s  Berkshire Hathaway  reduced its positions in several financial stocks in the fourth quarter, but didn’t sell any  Apple  shares.  The Omaha, Neb., company continued to sell  Bank of ...",
+      "url": "https://finance.yahoo.com/m/cba1041c-b1f2-39ce-bc6a-1a075e063cf5/buffett%E2%80%99s-berkshire-holds-on.html",
+      "sentiment": "positive",
+      "published_at": "2025-02-16T13:54:58.852304"
+    },
+    {
+      "headline": "The Score: Airbnb, Coke, Robinhood and More Stocks That Defined the Week",
+      "summary": "Airbnb  is moving into new businesses.  Chief Financial Officer  Ellie Mertz  said the company will increase its head count to support the new businesses it plans to launch and scale in 2025, and expe...",
+      "url": "https://finance.yahoo.com/m/594e6b94-6972-3d30-a8dd-c42f6a68d318/the-score-airbnb-coke-.html",
+      "sentiment": "positive",
+      "published_at": "2025-02-16T13:54:58.852313"
+    }
+  ],
+  "youtube_videos": [
+    {
+      "title": "AAPL Stock Analysis: Is the Apple TV+ Move to Android Boosting Shares? 📈 Thursday's Price Prediction",
+      "url": "https://youtube.com/watch?v=-pdVbpYAI3s",
+      "summary": "",
+      "channel": "StockInvest.us",
+      "published_at": "2025-02-13T13:54:19.780005"
+    },
+    {
+      "title": "Technical Analysis of Stocks: SPY / QQQ / NVDA / TSLA / AMD / PLTR / AAPL",
+      "url": "https://youtube.com/watch?v=u2hTWiQ1-HQ",
+      "summary": "",
+      "channel": "The Finance Hydra",
+      "published_at": "2025-02-14T13:54:19.779954"
+    },
+    {
+      "title": "AAPL Stock Analysis: New iPhone SE Launch on Feb 19 - Will It Drive Prices Up? 📈",
+      "url": "https://youtube.com/watch?v=hynbqpyjM3k",
+      "summary": "",
+      "channel": "StockInvest.us",
+      "published_at": "2025-02-14T13:54:19.779877"
+    },
+    {
+      "title": "'Fast Money' traders talk Apple's stock plunge",
+      "url": "https://youtube.com/watch?v=F95J7tQcgpg",
+      "summary": "",
+      "channel": "CNBC Television",
+      "published_at": "2025-01-17T13:54:19.780064"
+    },
+    {
+      "title": "'Fast Money' traders talk Apple earnings",
+      "url": "https://youtube.com/watch?v=6cP7LbeljJg",
+      "summary": "",
+      "channel": "CNBC Television",
+      "published_at": "2025-02-02T13:54:19.779819"
+    }
+  ],
+  "full_report": "**Technical Analysis**\n\n* **52-Week Range:** $164.08 - $260.1\n* **Price:** $244.6\n* **Support Level:** $232\n* **Resistance Level:** $246\n\nThe stock has been trading within a range since February 7th. It currently faces resistance at the $246 level. A breakout above this level could signal further gains.\n\n**News Sentiment (including insights from full article content)**\n\nThere is no recent news coverage available for analysis.\n\n**Social Media Analysis**\n\n* **YouTube Coverage:**\n    * StockInvest.us: Mentions the recent launch of the iPhone SE and the potential impact on share prices.\n    * The Finance Hydra: Technical analysis of AAPL stock, mentions potential support and resistance levels.\n* **Twitter:**\n    * Positive sentiment, with many tweets discussing the recent iPhone launch and the company's strong fundamentals.\n* **Reddit:**\n    * Bullish sentiment, with many posts discussing the potential for AAPL to continue its growth trajectory.\n\n**Fundamental Analysis**\n\n* **Market Cap:** $3,674.41B\n* **P/E Ratio:** 29.43\n* **EPS:** $8.31\n* **Revenue:** $394.33B\n* **Net Income:** $117.22B\n\nAAPL has reported strong financial performance in recent quarters. The company has a high market cap and a solid P/E ratio. Revenue and net income have both grown consistently over the past few years.\n\n**Actionable Summary**\n\nTechnical analysis suggests that AAPL could continue to trade within a range in the near term. However, the recent launch of the iPhone SE could provide a catalyst for a breakout.\n\n**Fundamental analysis indicates that AAPL is a well-performing company with strong financials and a bright future. Investors may want to consider adding AAPL to their portfolios.**\n\n**Potential Risks/Opportunities**\n\n* **Risks:**\n    * Competition from other tech companies\n    * Economic recession\n    * Supply chain disruptions\n* **Opportunities:**\n    * Continued growth in the iPhone market\n    * Expansion into new markets\n    * Development of new products and services"
+}
