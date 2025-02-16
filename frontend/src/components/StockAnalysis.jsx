@@ -13,8 +13,11 @@ export function StockAnalysis() {
       setLoading(true);
       setError(null);
       const response = await axios.post(`/api/report/${ticker}`);
+      console.log('API Response:', response.data); // Debug log
       setReport(response.data);
+      console.log('Report State:', report); // Debug log
     } catch (err) {
+      console.error('Error:', err); // Debug log
       setError(err.response?.data?.detail || 'An error occurred');
     } finally {
       setLoading(false);
@@ -52,7 +55,8 @@ export function StockAnalysis() {
 
         {report && (
           <Paper p="md" radius="md" withBorder mt="md">
-            <pre style={{ whiteSpace: 'pre-wrap' }}>
+            <Text mb="md">Report for {ticker}:</Text>
+            <pre style={{ whiteSpace: 'pre-wrap', background: '#f5f5f5', padding: '1rem', borderRadius: '4px' }}>
               {JSON.stringify(report, null, 2)}
             </pre>
           </Paper>

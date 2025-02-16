@@ -1,6 +1,4 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import { MantineProvider } from '@mantine/core';
 import { StockAnalysis } from './components/StockAnalysis';
 import '@mantine/core/styles.css';
