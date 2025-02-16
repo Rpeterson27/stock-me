@@ -1,0 +1,13 @@
+fastapi==0.109.2
+uvicorn==0.27.1
+pydantic==2.6.1
+google-generativeai>=0.3.0
+yfinance>=0.2.36
+agentql==1.8.1
+playwright==1.41.2
+google-cloud-language==2.13.1
+google-auth-oauthlib==1.2.0
+google-api-python-client==2.117.0
+python-dotenv==1.0.1
+aiohttp>=3.9.1
+weave==0.51.33
