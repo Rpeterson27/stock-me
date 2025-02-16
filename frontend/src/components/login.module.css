@@ -1,0 +1,16 @@
+.container {
+  width: 100%;
+  max-width: 400px;
+  padding: 1rem;
+}
+
+.paper {
+  margin-top: 2rem;
+  padding: 2rem;
+}
+
+.title {
+  margin-bottom: 2rem;
+  color: #1a1b1e;
+}
+
