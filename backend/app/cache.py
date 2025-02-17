@@ -223,3 +223,14 @@ class CacheService:
             self.logger.debug(f"Collection: {collection}, Key: {ticker}")
             self.logger.debug(f"Traceback: {traceback.format_exc()}")
             raise
+
+    async def cache_report(self, ticker: str, report: Dict[str, Any]) -> None:
+        """Cache a stock report."""
+        try:
+            self.logger.debug(f"Caching report for {ticker}")
+            await self.set(f"report:{ticker}", ticker, report)
+            self.logger.debug("Report cached successfully")
+        except Exception as e:
+            self.logger.error(f"Error caching report: {str(e)}")
+            self.logger.debug(traceback.format_exc())
+            raise

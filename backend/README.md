@@ -1,6 +1,6 @@
-# StockMe Backend
+# StockMe Backend Developer Documentation
 
-This is the backend service for the StockMe Report Generator. It provides AI-powered stock analysis by integrating multiple data sources and leveraging generative AI.
+This document provides technical details about the backend service architecture and implementation. For general project information and setup instructions, please refer to the main README in the root directory.
 
 ## Architecture
 

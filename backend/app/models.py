@@ -1,6 +1,20 @@
-from pydantic import BaseModel, HttpUrl, Field
-from typing import List, Optional, Dict, Any
+from pydantic import BaseModel
+from typing import List, Dict, Any, Optional
 from datetime import datetime
+
+class NewsArticle(BaseModel):
+    headline: str
+    summary: str
+    url: str
+    sentiment: str
+    published_at: str  # ISO 8601 format
+
+class YouTubeVideo(BaseModel):
+    title: str
+    url: str
+    summary: str
+    channel: str
+    published_at: str  # ISO 8601 format
 
 class StockData(BaseModel):
     price: float
@@ -8,40 +22,12 @@ class StockData(BaseModel):
     market_cap: str
     pe_ratio: float
 
-class NewsArticle(BaseModel):
-    headline: str
-    summary: str
-    url: HttpUrl
-    sentiment: str
-    published_at: datetime = Field(default_factory=datetime.now)
-    
-    class Config:
-        json_encoders = {
-            datetime: lambda v: v.isoformat()
-        }
-
-class YouTubeVideo(BaseModel):
-    title: str
-    url: HttpUrl
-    summary: str
-    channel: str
-    published_at: datetime = Field(default_factory=datetime.now)
-    
-    class Config:
-        json_encoders = {
-            datetime: lambda v: v.isoformat()
-        }
-
 class StockReport(BaseModel):
     """Model for a comprehensive stock analysis report."""
     ticker: str
-    timestamp: str
-    stock_data: Dict[str, Any]
-    news_links: List[Dict[str, Any]]
-    videos: List[Dict[str, Any]]
-    analysis: Dict[str, Any]
-
-    class Config:
-        json_encoders = {
-            datetime: lambda v: v.isoformat()
-        }
+    sentiment_summary: str
+    key_insights: List[str]
+    stock_data: StockData
+    news_articles: List[NewsArticle]
+    youtube_videos: List[YouTubeVideo]
+    full_report: str
