@@ -1,48 +1,46 @@
-import type React from "react"
-import { useStytch } from "@stytch/react"
-import { Button, Container, Paper, Title, Text } from "@mantine/core"
-import { BrandGoogle } from "tabler-icons-react"
+import { StytchLogin } from "@stytch/react";
+import { Products } from '@stytch/vanilla-js';
+import { Container, Paper, Title } from "@mantine/core";
+import styles from './login.module.css';
 
-interface LoginProps {
-  onLogin: () => void
-}
-
-const Login: React.FC<LoginProps> = ({ onLogin }) => {
-  const stytchClient = useStytch()
-
-  const handleGoogleLogin = async () => {
-    try {
-      await stytchClient.oauth.google.start({
-        login_redirect_url: `${window.location.origin}/authenticate`,
-        signup_redirect_url: `${window.location.origin}/authenticate`,
-      })
-    } catch (error) {
-      console.error("Failed to start Google OAuth:", error)
-    }
-  }
-
+const Login = () => {
   return (
-    <Container size={420} my={40}>
-      <Title ta="center" fw={900}>
-        Welcome to Stock Analysis
-      </Title>
-      <Text c="dimmed" size="sm" ta="center" mt={5}>
-        Sign in to access your dashboard
-      </Text>
-
-      <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-        <Button
-          leftSection={<BrandGoogle size={20} />}
-          variant="default"
-          color="gray"
-          fullWidth
-          onClick={handleGoogleLogin}
-        >
-          Continue with Google
-        </Button>
+    <Container size="xs" className={styles.container}>
+      <Paper shadow="md" p="xl" radius="md" className={styles.paper}>
+        <Title order={2} ta="center" mb="xl">Welcome to StockMe</Title>
+        <StytchLogin
+          config={{
+            products: [Products.oauth],
+            oauthOptions: {
+              providers: [{ 
+                type: 'google',
+                one_tap: true,
+                position: 'floating'
+              }],
+              loginRedirectURL: window.location.origin + '/authenticate',
+              signupRedirectURL: window.location.origin + '/authenticate'
+            }
+          }}
+          styles={{
+            container: {
+              width: '100%'
+            },
+            buttons: {
+              primary: {
+                backgroundColor: '#4285f4',
+                borderColor: '#4285f4',
+                borderRadius: '4px',
+                // fontSize: '16px',
+                textColor: '#ffffff',
+                // width: '100%',
+                // marginBottom: '16px'
+              }
+            }
+          }}
+        />
       </Paper>
     </Container>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
